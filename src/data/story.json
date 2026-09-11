@@ -1,0 +1,82 @@
+{
+  "scenes": [
+    {
+      "id": "Courtyard",
+      "frameCount": 240,
+      "framePath": "/frames/scene-1/frame_%04d.webp",
+      "beats": [
+        {
+          "frameStart": 0,
+          "frameEnd": 60,
+          "text": "In the hour before the gods wake,",
+          "align": "left"
+        },
+        {
+          "frameStart": 70,
+          "frameEnd": 130,
+          "text": "the marble remembers every footstep.",
+          "align": "center",
+          "image": "/images/sculptures/angel cybersigilism.jpg"
+        },
+        {
+          "frameStart": 140,
+          "frameEnd": 220,
+          "text": "This is where the story begins.",
+          "align": "right"
+        }
+      ]
+    },
+    {
+      "id": "Temple Interior",
+      "frameCount": 240,
+      "framePath": "/frames/scene-2/frame_%04d.webp",
+      "beats": [
+        {
+          "frameStart": 10,
+          "frameEnd": 70,
+          "text": "Shadows lengthen in the sacred halls,",
+          "align": "left"
+        },
+        {
+          "frameStart": 80,
+          "frameEnd": 140,
+          "text": "where prayers turn to stone,",
+          "align": "center",
+          "image": "/images/sculptures/medusa-gorgon.jpg"
+        },
+        {
+          "frameStart": 150,
+          "frameEnd": 230,
+          "text": "and silence is an offering.",
+          "align": "right"
+        }
+      ]
+    },
+    {
+      "id": "Sky/Gods",
+      "frameCount": 240,
+      "framePath": "/frames/scene-3/frame_%04d.webp",
+      "beats": [
+        {
+          "frameStart": 20,
+          "frameEnd": 90,
+          "text": "Above the mortal realm they watch,",
+          "align": "left"
+        },
+        {
+          "frameStart": 100,
+          "frameEnd": 170,
+          "text": "woven into the fabric of the sky,",
+          "align": "center",
+          "image": "/images/sculptures/Greek Discus.jpg"
+        },
+        {
+          "frameStart": 180,
+          "frameEnd": 230,
+          "text": "eternal and unchanging.",
+          "align": "right"
+        }
+      ]
+    }
+  ]
+}

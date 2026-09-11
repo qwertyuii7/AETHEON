@@ -1,0 +1,32 @@
+:root {
+  --color-ivory: #EDE6D6;
+  --color-terracotta: #B5652D;
+  --color-aegean: #1F5C78;
+  --color-gold: #C9A227;
+  --color-ink: #1A1613;
+}
+
+body {
+  background-color: var(--color-ink);
+  color: var(--color-ivory);
+  margin: 0;
+  overflow-x: clip;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Reduced motion fallback */
+@media (prefers-reduced-motion: reduce) {
+  .motion-safe-only {
+    display: none !important;
+  }
+  .reduced-motion-only {
+    display: block !important;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .reduced-motion-only {
+    display: none !important;
+  }
+}

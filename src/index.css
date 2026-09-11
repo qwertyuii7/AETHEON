@@ -1,0 +1,11 @@
+@import "tailwindcss";
+@import './styles/tokens.css';
+@import './styles/typography.css';
+
+@theme {
+  --color-ivory: #EDE6D6;
+  --color-terracotta: #B5652D;
+  --color-aegean: #1F5C78;
+  --color-gold: #C9A227;
+  --color-ink: #1A1613;
+}

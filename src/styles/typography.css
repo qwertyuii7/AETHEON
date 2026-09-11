@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
+
+@font-face {
+  font-family: 'Ethereal Nymeria';
+  src: url('/fonts/ethereal-nymeria/Ethereal Nymeria Personal Use.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+  --font-serif: 'Ethereal Nymeria', serif;
+  --font-sans: 'Inter', sans-serif;
+}
+
+.text-beat {
+  font-family: var(--font-serif);
+  font-size: 3rem;
+  letter-spacing: 0.03em;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+@media (max-width: 768px) {
+  .text-beat {
+    font-size: 2rem;
+  }
+}
