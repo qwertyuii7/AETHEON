@@ -12,7 +12,7 @@ export const FAQ: React.FC = () => {
 
   return (
     <section id="faq" style={{ 
-      backgroundColor: '#1A1613', color: '#EDE6D6', 
+      backgroundColor: '#000000', color: '#EDE6D6', 
       padding: 'clamp(60px, 8vw, 120px) clamp(16px, 4vw, 48px)' 
     }}>
       <div style={{ maxWidth: '700px', margin: '0 auto' }}>

@@ -59,7 +59,7 @@ export const HeroScroll: React.FC = () => {
     <div id={HERO_ID} style={{ position: 'relative', width: '100%', height: '900vh' }}>
       <div style={{
         position: 'sticky', top: 0, width: '100%', height: '100vh',
-        overflow: 'hidden', backgroundColor: '#1A1613',
+        overflow: 'hidden', backgroundColor: '#000000',
       }}>
 
         {storyData.scenes.map((scene: any, i: number) => {

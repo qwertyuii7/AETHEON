@@ -1,18 +1,14 @@
 import React, { useEffect, useState } from 'react';
 
 export const Navbar: React.FC = () => {
-  const [scrolled, setScrolled] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     
     handleResize();
-    window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', handleResize);
     return () => {
-      window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleResize);
     };
   }, []);
@@ -21,9 +17,9 @@ export const Navbar: React.FC = () => {
     <header style={{
       position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 100,
       transition: 'background-color 0.5s, backdrop-filter 0.5s',
-      backgroundColor: scrolled ? 'rgba(26, 22, 19, 0.92)' : 'transparent',
-      backdropFilter: scrolled ? 'blur(12px)' : 'none',
-      borderBottom: scrolled ? '1px solid rgba(255,255,255,0.06)' : '1px solid transparent',
+      backgroundColor: 'transparent',
+      backdropFilter: 'none',
+      borderBottom: '1px solid transparent',
     }}>
       <div style={{
         maxWidth: '1400px', margin: '0 auto',
@@ -42,9 +38,11 @@ export const Navbar: React.FC = () => {
         {/* Brand */}
         <a href="#" style={{
           fontFamily: "'Ethereal Nymeria', serif",
-          fontSize: isMobile ? '1.3rem' : '1.6rem',
-          letterSpacing: '0.2em', color: '#EDE6D6', textDecoration: 'none',
-          fontWeight: 500, position: isMobile ? 'static' : 'absolute',
+          fontSize: isMobile ? '1.5rem' : '2.0rem',
+          letterSpacing: '0.15em', color: '#EDE6D6', textDecoration: 'none',
+          fontWeight: 900, 
+          textShadow: '0 2px 20px rgba(0,0,0,1)', // Ensuring clarity over scenes
+          position: isMobile ? 'static' : 'absolute',
           left: isMobile ? undefined : '50%',
           transform: isMobile ? undefined : 'translateX(-50%)',
         }}>AETHEON</a>

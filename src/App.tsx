@@ -5,6 +5,7 @@ import Lenis from 'lenis';
 
 import { Navbar } from './components/Navbar';
 import { HeroScroll } from './components/HeroScroll';
+import { ModelShowcase } from './components/ModelShowcase';
 import { Products } from './components/Products';
 import { Newsletter } from './components/Newsletter';
 import { FAQ } from './components/FAQ';
@@ -36,13 +37,14 @@ const App: React.FC = () => {
 
   return (
     <div style={{ 
-      backgroundColor: '#1A1613', 
+      backgroundColor: '#000000', 
       minHeight: '100vh', 
       color: '#EDE6D6',
       fontFamily: "'Inter', sans-serif",
     }}>
       <Navbar />
       <HeroScroll />
+      <ModelShowcase />
       <Products />
       <Newsletter />
       <FAQ />

@@ -50,16 +50,39 @@ export const Scene: React.FC<SceneProps> = ({ scene, scrollContainerId, scrollSt
       const imgRatio = img.naturalWidth / img.naturalHeight;
       const canvasRatio = cw / ch;
       
-      let dw = cw, dh = ch, ox = 0, oy = 0;
+      // 1. Calculate 'cover' dimensions for ambient background
+      let bgW = cw, bgH = ch, bgX = 0, bgY = 0;
       if (imgRatio > canvasRatio) {
-        dw = ch * imgRatio;
-        ox = (cw - dw) / 2;
+        bgW = ch * imgRatio;
+        bgX = (cw - bgW) / 2;
       } else {
-        dh = cw / imgRatio;
-        oy = (ch - dh) / 2;
+        bgH = cw / imgRatio;
+        bgY = (ch - bgH) / 2;
       }
       
-      ctx.drawImage(img, ox, oy, dw, dh);
+      // 2. Calculate 'contain' dimensions for crisp foreground
+      let fgW = cw, fgH = ch, fgX = 0, fgY = 0;
+      if (imgRatio > canvasRatio) {
+        fgW = cw;
+        fgH = cw / imgRatio;
+        fgY = (ch - fgH) / 2;
+      } else {
+        fgH = ch;
+        fgW = ch * imgRatio;
+        fgX = (cw - fgW) / 2;
+      }
+      
+      // Clear canvas
+      ctx.clearRect(0, 0, cw, ch);
+      
+      // Draw ambient background (darkened and stretched)
+      ctx.globalAlpha = 0.15; // subtle dark ambient glow
+      ctx.drawImage(img, bgX, bgY, bgW, bgH);
+      
+      // Draw crisp foreground (contained, no cropping)
+      ctx.globalAlpha = 1.0;
+      ctx.drawImage(img, fgX, fgY, fgW, fgH);
+
       currentFrameRef.current = frameIndex;
     }
   }, []);

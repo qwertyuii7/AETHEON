@@ -3,7 +3,7 @@ import React from 'react';
 export const Newsletter: React.FC = () => {
   return (
     <section id="newsletter" style={{ 
-      backgroundColor: '#EDE6D6', color: '#1A1613', 
+      backgroundColor: '#EDE6D6', color: '#000000', 
       padding: 'clamp(60px, 8vw, 120px) clamp(16px, 4vw, 48px)',
     }}>
       <div style={{ maxWidth: '600px', margin: '0 auto', textAlign: 'center' }}>
@@ -35,7 +35,7 @@ export const Newsletter: React.FC = () => {
               flex: '1 1 240px', padding: '14px 20px',
               border: 'none', borderBottom: '1px solid rgba(26,22,19,0.2)',
               backgroundColor: 'transparent', fontSize: '0.9rem',
-              outline: 'none', color: '#1A1613',
+              outline: 'none', color: '#000000',
               borderRadius: 0, // iOS fix
             }}
           />
@@ -45,7 +45,7 @@ export const Newsletter: React.FC = () => {
             textTransform: 'uppercase', cursor: 'pointer', transition: 'background-color 0.3s',
             whiteSpace: 'nowrap',
           }}
-            onMouseOver={e => (e.currentTarget.style.backgroundColor = '#1A1613')}
+            onMouseOver={e => (e.currentTarget.style.backgroundColor = '#000000')}
             onMouseOut={e => (e.currentTarget.style.backgroundColor = '#B5652D')}
           >
             Subscribe

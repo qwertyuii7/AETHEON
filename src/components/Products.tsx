@@ -114,7 +114,7 @@ export const Products: React.FC = () => {
 
 // — Styles —
 const sectionStyle: React.CSSProperties = {
-  backgroundColor: '#1A1613',
+  backgroundColor: '#000000',
   color: '#EDE6D6',
   padding: 'clamp(60px, 10vw, 140px) clamp(16px, 4vw, 48px)',
 };
