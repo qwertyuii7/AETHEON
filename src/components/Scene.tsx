@@ -40,49 +40,26 @@ export const Scene: React.FC<SceneProps> = ({ scene, scrollContainerId, scrollSt
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     const img = imagesRef.current[frameIndex];
-    
+
     if (ctx && img && img.complete && img.naturalWidth > 0) {
       ctx.imageSmoothingEnabled = true;
       ctx.imageSmoothingQuality = 'high';
-      
+
       const cw = canvas.width;
       const ch = canvas.height;
       const imgRatio = img.naturalWidth / img.naturalHeight;
       const canvasRatio = cw / ch;
-      
-      // 1. Calculate 'cover' dimensions for ambient background
-      let bgW = cw, bgH = ch, bgX = 0, bgY = 0;
-      if (imgRatio > canvasRatio) {
-        bgW = ch * imgRatio;
-        bgX = (cw - bgW) / 2;
-      } else {
-        bgH = cw / imgRatio;
-        bgY = (ch - bgH) / 2;
-      }
-      
-      // 2. Calculate 'contain' dimensions for crisp foreground
-      let fgW = cw, fgH = ch, fgX = 0, fgY = 0;
-      if (imgRatio > canvasRatio) {
-        fgW = cw;
-        fgH = cw / imgRatio;
-        fgY = (ch - fgH) / 2;
-      } else {
-        fgH = ch;
-        fgW = ch * imgRatio;
-        fgX = (cw - fgW) / 2;
-      }
-      
-      // Clear canvas
-      ctx.clearRect(0, 0, cw, ch);
-      
-      // Draw ambient background (darkened and stretched)
-      ctx.globalAlpha = 0.15; // subtle dark ambient glow
-      ctx.drawImage(img, bgX, bgY, bgW, bgH);
-      
-      // Draw crisp foreground (contained, no cropping)
-      ctx.globalAlpha = 1.0;
-      ctx.drawImage(img, fgX, fgY, fgW, fgH);
 
+      let dw = cw, dh = ch, ox = 0, oy = 0;
+      if (imgRatio > canvasRatio) {
+        dw = ch * imgRatio;
+        ox = (cw - dw) / 2;
+      } else {
+        dh = cw / imgRatio;
+        oy = (ch - dh) / 2;
+      }
+
+      ctx.drawImage(img, ox, oy, dw, dh);
       currentFrameRef.current = frameIndex;
     }
   }, []);
@@ -140,7 +117,7 @@ export const Scene: React.FC<SceneProps> = ({ scene, scrollContainerId, scrollSt
       canvas.style.height = '100%';
       drawFrame(currentFrameRef.current);
     };
-    
+
     let timer: ReturnType<typeof setTimeout>;
     const debounced = () => { clearTimeout(timer); timer = setTimeout(resize, 150); };
     resize();
@@ -192,13 +169,13 @@ export const Scene: React.FC<SceneProps> = ({ scene, scrollContainerId, scrollSt
     scene.beats.forEach((beat, i) => {
       const el = textRefs.current[i];
       if (!el) return;
-      
+
       tl.fromTo(el,
         { opacity: 0, y: 30, filter: 'blur(6px)' },
         { opacity: 1, y: 0, filter: 'blur(0px)', duration: 20, ease: 'power2.out' },
         beat.frameStart
       );
-      
+
       tl.to(el,
         { opacity: 0, y: -25, filter: 'blur(4px)', duration: 12, ease: 'power2.in' },
         beat.frameEnd - 12
@@ -209,83 +186,45 @@ export const Scene: React.FC<SceneProps> = ({ scene, scrollContainerId, scrollSt
   }, [scene, scrollContainerId, scrollStart, scrollEnd, drawFrame, requestDraw]);
 
   return (
-    <div style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}>
-      <canvas 
+    <div className="absolute inset-0 w-full h-full">
+      <canvas
         ref={canvasRef}
-        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', display: 'block' }}
+        className="absolute inset-0 w-full h-full block"
       />
 
       {/* Loading */}
       {loadedCount < scene.frameCount && (
-        <div style={{
-          position: 'absolute', bottom: '16px', right: '16px',
-          fontSize: '0.65rem', letterSpacing: '0.2em', color: '#C9A227',
-          opacity: 0.5, zIndex: 50, pointerEvents: 'none',
-        }}>
+        <div className="absolute bottom-4 right-4 text-[0.65rem] tracking-[0.2em] text-gold opacity-50 z-50 pointer-events-none">
           {Math.round((loadedCount / scene.frameCount) * 100)}%
         </div>
       )}
 
       {/* Text overlays */}
-      <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 10 }}>
+      <div className="absolute inset-0 pointer-events-none z-10">
         {scene.beats.map((beat, i) => {
-          const base: React.CSSProperties = {
-            position: 'absolute', inset: 0,
-            display: 'flex', flexDirection: 'column', justifyContent: 'center',
-            alignItems: 'center', textAlign: 'center',
-            padding: '0 8%',
-          };
+          let alignClass = "items-center text-center px-[8%]";
           if (beat.align === 'left') {
-            base.alignItems = 'flex-start';
-            base.textAlign = 'left';
-            base.paddingLeft = '10%';
-            base.paddingRight = '30%';
+            alignClass = "items-start text-left pl-[10%] pr-[30%]";
+          } else if (beat.align === 'right') {
+            alignClass = "items-end text-right pr-[10%] pl-[30%]";
           }
-          if (beat.align === 'right') {
-            base.alignItems = 'flex-end';
-            base.textAlign = 'right';
-            base.paddingRight = '10%';
-            base.paddingLeft = '30%';
-          }
-          
+
           return (
-            <div key={i} style={base}>
-              <div 
+            <div key={i} className={`absolute inset-0 flex flex-col justify-center ${alignClass}`}>
+              <div
                 ref={el => { textRefs.current[i] = el; }}
-                style={{ 
-                  fontFamily: "'Ethereal Nymeria', serif",
-                  fontSize: 'clamp(1.6rem, 3.5vw, 3.2rem)',
-                  letterSpacing: '0.04em',
-                  fontWeight: 400,
-                  lineHeight: 1.35,
-                  color: '#FFFFFF', // Pure white for better contrast
-                  maxWidth: '900px',
-                  // Professional multi-layered text-shadow for crisp edge contrast
+                className={`font-serif text-[clamp(1.6rem,3.5vw,3.2rem)] tracking-[0.04em] font-normal leading-snug text-white max-w-[900px] opacity-0 flex ${i % 2 === 0 ? 'flex-row' : 'flex-row-reverse'} items-center justify-center gap-[clamp(32px,6vw,80px)] px-[clamp(20px,5vw,60px)] py-4`}
+                style={{
                   textShadow: '0 1px 2px rgba(0,0,0,0.9), 0 4px 16px rgba(0,0,0,0.8), 0 10px 40px rgba(0,0,0,0.9)',
-                  opacity: 0,
-                  display: 'flex',
-                  flexDirection: i % 2 === 0 ? 'row' : 'row-reverse',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: 'clamp(32px, 6vw, 80px)',
-                  textAlign: beat.align,
-                  // A very soft, localized dark vignette behind the text and image
                   background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0) 65%)',
-                  padding: 'clamp(20px, 5vw, 60px)',
+                  textAlign: beat.align,
                 }}
               >
                 {beat.image && (
-                  <img 
-                    src={beat.image} 
-                    alt="Sculpture" 
-                    style={{
-                      width: 'clamp(100px, 14vw, 160px)',
-                      aspectRatio: '3/4',
-                      objectFit: 'cover',
-                      borderRadius: '4px',
-                      boxShadow: '0 20px 60px rgba(0,0,0,0.8)',
-                      flexShrink: 0
-                    }}
+                  <img
+                    src={beat.image}
+                    alt="Sculpture"
+                    className="w-[clamp(100px,14vw,160px)] aspect-[3/4] object-cover rounded shadow-[0_20px_60px_rgba(0,0,0,0.8)] shrink-0"
                   />
                 )}
                 <span>{beat.text}</span>

@@ -36,12 +36,7 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div style={{ 
-      backgroundColor: '#000000', 
-      minHeight: '100vh', 
-      color: '#EDE6D6',
-      fontFamily: "'Inter', sans-serif",
-    }}>
+    <div className="bg-ink min-h-screen text-ivory font-sans">
       <Navbar />
       <HeroScroll />
       <ModelShowcase />

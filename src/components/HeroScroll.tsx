@@ -56,11 +56,8 @@ export const HeroScroll: React.FC = () => {
   }, []);
 
   return (
-    <div id={HERO_ID} style={{ position: 'relative', width: '100%', height: '900vh' }}>
-      <div style={{
-        position: 'sticky', top: 0, width: '100%', height: '100vh',
-        overflow: 'hidden', backgroundColor: '#000000',
-      }}>
+    <div id={HERO_ID} className="relative w-full h-[900vh]">
+      <div className="sticky top-0 w-full h-screen overflow-hidden bg-ink">
 
         {storyData.scenes.map((scene: any, i: number) => {
           const starts = ['top top', '33.3% top', '66.6% top'];
@@ -70,7 +67,8 @@ export const HeroScroll: React.FC = () => {
             <div 
               key={scene.id}
               id={`scene-layer-${i}`} 
-              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', zIndex: 10 - i }}
+              className="absolute inset-0 w-full h-full"
+              style={{ zIndex: 10 - i }}
             >
               <Scene scene={scene} scrollContainerId={HERO_ID} scrollStart={starts[i]} scrollEnd={ends[i]} />
             </div>
@@ -81,19 +79,13 @@ export const HeroScroll: React.FC = () => {
         <WaterRipple visible={rippleVisible} />
 
         {/* Scroll indicator at bottom of first viewport */}
-        <div style={{
-          position: 'absolute', bottom: '32px', left: '50%', transform: 'translateX(-50%)',
-          zIndex: 20, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px',
-          opacity: rippleVisible ? 0.6 : 0, transition: 'opacity 0.5s',
-          pointerEvents: 'none',
-        }}>
-          <span style={{
-            fontSize: '0.6rem', letterSpacing: '0.3em', textTransform: 'uppercase',
-            color: '#EDE6D6',
-          }}>Scroll to explore</span>
-          <div style={{
-            width: '1px', height: '40px', background: 'linear-gradient(to bottom, #C9A227, transparent)',
-          }} />
+        <div 
+          className={`absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 pointer-events-none transition-opacity duration-500 ${rippleVisible ? 'opacity-60' : 'opacity-0'}`}
+        >
+          <span className="text-[0.6rem] tracking-[0.3em] uppercase text-ivory">
+            Scroll to explore
+          </span>
+          <div className="w-[1px] h-[40px] bg-gradient-to-b from-gold to-transparent" />
         </div>
         
       </div>

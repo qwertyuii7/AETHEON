@@ -11,46 +11,31 @@ export const FAQ: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section id="faq" style={{ 
-      backgroundColor: '#000000', color: '#EDE6D6', 
-      padding: 'clamp(60px, 8vw, 120px) clamp(16px, 4vw, 48px)' 
-    }}>
-      <div style={{ maxWidth: '700px', margin: '0 auto' }}>
-        <div style={{ textAlign: 'center', marginBottom: 'clamp(40px, 5vw, 72px)' }}>
-          <p style={{ fontSize: '0.65rem', letterSpacing: '0.3em', textTransform: 'uppercase', color: '#C9A227', marginBottom: '12px' }}>Support</p>
-          <h2 style={{ fontFamily: "'Ethereal Nymeria', serif", fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', fontWeight: 400, margin: 0 }}>Client Services</h2>
+    <section id="faq" className="bg-ink text-ivory py-[clamp(60px,8vw,120px)] px-[clamp(16px,4vw,48px)]">
+      <div className="max-w-[700px] mx-auto">
+        <div className="text-center mb-[clamp(40px,5vw,72px)]">
+          <p className="text-[0.65rem] tracking-[0.3em] uppercase text-gold mb-3">Support</p>
+          <h2 className="font-serif text-[clamp(1.8rem,4vw,2.8rem)] font-normal m-0">Client Services</h2>
         </div>
 
         <div>
           {faqs.map((faq, i) => (
-            <div key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+            <div key={i} className="border-b border-white/5">
               <button
                 onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                style={{
-                  width: '100%', textAlign: 'left', padding: 'clamp(16px, 2vw, 24px) 0',
-                  display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                  background: 'none', border: 'none', color: '#EDE6D6', cursor: 'pointer',
-                  fontFamily: "'Ethereal Nymeria', serif", fontSize: 'clamp(1rem, 1.8vw, 1.3rem)',
-                  gap: '16px',
-                }}
+                className="w-full text-left py-[clamp(16px,2vw,24px)] flex justify-between items-center bg-transparent border-none text-ivory cursor-pointer font-serif text-[clamp(1rem,1.8vw,1.3rem)] gap-4"
               >
                 <span>{faq.question}</span>
-                <span style={{ 
-                  color: '#C9A227', fontSize: '1.3rem', fontWeight: 300,
-                  transform: openIndex === i ? 'rotate(45deg)' : 'rotate(0)',
-                  transition: 'transform 0.3s', flexShrink: 0,
-                }}>+</span>
+                <span className={`text-gold text-[1.3rem] font-light shrink-0 transition-transform duration-300 ${openIndex === i ? 'rotate-45' : 'rotate-0'}`}>
+                  +
+                </span>
               </button>
-              <div style={{
-                maxHeight: openIndex === i ? '300px' : '0',
-                opacity: openIndex === i ? 1 : 0,
-                overflow: 'hidden', transition: 'all 0.4s ease-in-out',
-                paddingBottom: openIndex === i ? '20px' : '0',
-              }}>
-                <p style={{ 
-                  color: 'rgba(237,230,214,0.5)', lineHeight: 1.8, margin: 0,
-                  fontSize: 'clamp(0.8rem, 1.1vw, 0.95rem)', paddingRight: '32px',
-                }}>{faq.answer}</p>
+              <div 
+                className={`overflow-hidden transition-all duration-400 ease-in-out ${openIndex === i ? 'max-h-[300px] opacity-100 pb-5' : 'max-h-0 opacity-0 pb-0'}`}
+              >
+                <p className="text-ivory/50 leading-[1.8] m-0 text-[clamp(0.8rem,1.1vw,0.95rem)] pr-8">
+                  {faq.answer}
+                </p>
               </div>
             </div>
           ))}

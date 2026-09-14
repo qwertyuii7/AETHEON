@@ -43,208 +43,61 @@ export const Products: React.FC = () => {
   }, []);
 
   return (
-    <section id="collections" ref={sectionRef} style={sectionStyle}>
-      <div style={containerStyle}>
+    <section id="collections" ref={sectionRef} className="bg-ink text-ivory py-[clamp(60px,10vw,140px)] px-[clamp(16px,4vw,48px)]">
+      <div className="max-w-[1400px] mx-auto">
         
         {/* Header */}
-        <div style={headerStyle}>
-          <p style={labelStyle}>Curated Masterworks</p>
-          <h2 style={titleStyle}>The Elysian Collection</h2>
-          <div style={dividerStyle} />
-          <p style={subtitleStyle}>
+        <div className="text-center mb-[clamp(48px,6vw,100px)]">
+          <p className="text-[0.7rem] tracking-[0.3em] uppercase text-gold mb-3.5">Curated Masterworks</p>
+          <h2 className="font-serif text-[clamp(2.2rem,5vw,4rem)] font-normal m-0 leading-tight">The Elysian Collection</h2>
+          <div className="w-[50px] h-[1px] bg-gold mx-auto my-7" />
+          <p className="max-w-[500px] mx-auto text-[clamp(0.85rem,1.2vw,1rem)] leading-relaxed text-ivory/50">
             Each piece is hand-carved from solid Carrara marble by our master artisans, 
             preserving techniques passed down through millennia.
           </p>
         </div>
 
         {/* Product grid */}
-        <div style={gridStyle}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-[clamp(24px,3vw,48px)] gap-x-[clamp(16px,2vw,32px)]">
           {sculptures.map((item, i) => (
             <div 
               key={item.id} 
               ref={el => { cardsRef.current[i] = el; }}
-              style={{ opacity: 0, cursor: 'pointer' }}
+              className="opacity-0 cursor-pointer group"
             >
               {/* Image container */}
-              <div style={imageContainerStyle}>
+              <div className="aspect-[3/4] overflow-hidden bg-white/5 mb-4 relative rounded-sm">
                 <img 
                   src={item.image} 
                   alt={item.name}
                   loading="lazy"
-                  style={imageStyle}
-                  onMouseOver={e => {
-                    e.currentTarget.style.transform = 'scale(1.06)';
-                    const overlay = e.currentTarget.nextElementSibling as HTMLElement;
-                    if (overlay) overlay.style.opacity = '1';
-                  }}
-                  onMouseOut={e => {
-                    e.currentTarget.style.transform = 'scale(1)';
-                    const overlay = e.currentTarget.nextElementSibling as HTMLElement;
-                    if (overlay) overlay.style.opacity = '0';
-                  }}
+                  className="w-full h-full object-cover transition-transform duration-[800ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] block group-hover:scale-105"
                 />
                 {/* Hover overlay */}
-                <div style={overlayStyle}>
-                  <span style={ctaStyle}>View Details</span>
+                <div className="absolute inset-0 bg-[#1A1613]/30 opacity-0 group-hover:opacity-100 transition-opacity duration-400 flex items-center justify-center pointer-events-none">
+                  <span className="border border-ivory/50 px-7 py-2.5 text-[0.65rem] tracking-[0.2em] uppercase backdrop-blur-sm text-ivory">View Details</span>
                 </div>
               </div>
 
               {/* Product info */}
-              <div style={infoStyle}>
+              <div className="flex justify-between items-end gap-3">
                 <div>
-                  <h3 style={nameStyle}>{item.name}</h3>
-                  <p style={catStyle}>{item.category}</p>
+                  <h3 className="font-serif text-[clamp(1.1rem,1.5vw,1.4rem)] m-0 mb-1 font-normal leading-snug">{item.name}</h3>
+                  <p className="text-[0.65rem] tracking-[0.12em] uppercase text-ivory/35 m-0">{item.category}</p>
                 </div>
-                <p style={priceStyle}>{item.price}</p>
+                <p className="text-gold text-[0.95rem] tracking-[0.05em] m-0 font-sans whitespace-nowrap">{item.price}</p>
               </div>
             </div>
           ))}
         </div>
 
         {/* View All CTA */}
-        <div style={{ textAlign: 'center', marginTop: '80px' }}>
-          <a href="#" style={viewAllStyle}>
+        <div className="text-center mt-20">
+          <a href="#" className="inline-block px-12 py-3.5 border border-ivory/20 text-ivory no-underline text-[0.7rem] tracking-[0.2em] uppercase transition-all duration-400 hover:bg-ivory hover:text-ink">
             View Full Collection
           </a>
         </div>
       </div>
     </section>
   );
-};
-
-// — Styles —
-const sectionStyle: React.CSSProperties = {
-  backgroundColor: '#000000',
-  color: '#EDE6D6',
-  padding: 'clamp(60px, 10vw, 140px) clamp(16px, 4vw, 48px)',
-};
-
-const containerStyle: React.CSSProperties = {
-  maxWidth: '1400px',
-  margin: '0 auto',
-};
-
-const headerStyle: React.CSSProperties = {
-  textAlign: 'center',
-  marginBottom: 'clamp(48px, 6vw, 100px)',
-};
-
-const labelStyle: React.CSSProperties = {
-  fontSize: '0.7rem',
-  letterSpacing: '0.3em',
-  textTransform: 'uppercase',
-  color: '#C9A227',
-  marginBottom: '14px',
-};
-
-const titleStyle: React.CSSProperties = {
-  fontFamily: "'Ethereal Nymeria', serif",
-  fontSize: 'clamp(2.2rem, 5vw, 4rem)',
-  fontWeight: 400,
-  margin: 0,
-  lineHeight: 1.1,
-};
-
-const dividerStyle: React.CSSProperties = {
-  width: '50px',
-  height: '1px',
-  backgroundColor: '#C9A227',
-  margin: '28px auto',
-};
-
-const subtitleStyle: React.CSSProperties = {
-  maxWidth: '500px',
-  margin: '0 auto',
-  fontSize: 'clamp(0.85rem, 1.2vw, 1rem)',
-  lineHeight: 1.7,
-  color: 'rgba(237,230,214,0.5)',
-};
-
-const gridStyle: React.CSSProperties = {
-  display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 280px), 1fr))',
-  gap: 'clamp(24px, 3vw, 48px) clamp(16px, 2vw, 32px)',
-};
-
-const imageContainerStyle: React.CSSProperties = {
-  aspectRatio: '3/4',
-  overflow: 'hidden',
-  backgroundColor: 'rgba(255,255,255,0.03)',
-  marginBottom: '18px',
-  position: 'relative',
-  borderRadius: '2px',
-};
-
-const imageStyle: React.CSSProperties = {
-  width: '100%',
-  height: '100%',
-  objectFit: 'cover',
-  transition: 'transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-  display: 'block',
-};
-
-const overlayStyle: React.CSSProperties = {
-  position: 'absolute',
-  inset: 0,
-  backgroundColor: 'rgba(26,22,19,0.3)',
-  opacity: 0,
-  transition: 'opacity 0.4s ease',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  pointerEvents: 'none',
-};
-
-const ctaStyle: React.CSSProperties = {
-  border: '1px solid rgba(237,230,214,0.5)',
-  padding: '10px 28px',
-  fontSize: '0.65rem',
-  letterSpacing: '0.2em',
-  textTransform: 'uppercase',
-  backdropFilter: 'blur(4px)',
-  color: '#EDE6D6',
-};
-
-const infoStyle: React.CSSProperties = {
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'flex-end',
-  gap: '12px',
-};
-
-const nameStyle: React.CSSProperties = {
-  fontFamily: "'Ethereal Nymeria', serif",
-  fontSize: 'clamp(1.1rem, 1.5vw, 1.4rem)',
-  margin: '0 0 4px',
-  fontWeight: 400,
-  lineHeight: 1.2,
-};
-
-const catStyle: React.CSSProperties = {
-  fontSize: '0.65rem',
-  letterSpacing: '0.12em',
-  textTransform: 'uppercase',
-  color: 'rgba(237,230,214,0.35)',
-  margin: 0,
-};
-
-const priceStyle: React.CSSProperties = {
-  color: '#C9A227',
-  fontSize: '0.95rem',
-  letterSpacing: '0.05em',
-  margin: 0,
-  fontFamily: "'Inter', sans-serif",
-  whiteSpace: 'nowrap',
-};
-
-const viewAllStyle: React.CSSProperties = {
-  display: 'inline-block',
-  padding: '14px 48px',
-  border: '1px solid rgba(237,230,214,0.2)',
-  color: '#EDE6D6',
-  textDecoration: 'none',
-  fontSize: '0.7rem',
-  letterSpacing: '0.2em',
-  textTransform: 'uppercase',
-  transition: 'all 0.4s ease',
 };
