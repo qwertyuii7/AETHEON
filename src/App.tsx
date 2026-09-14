@@ -10,6 +10,7 @@ import { Products } from './components/Products';
 import { Newsletter } from './components/Newsletter';
 import { FAQ } from './components/FAQ';
 import { Footer } from './components/Footer';
+import { Loader } from './components/Loader';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -37,6 +38,7 @@ const App: React.FC = () => {
 
   return (
     <div className="bg-ink min-h-screen text-ivory font-sans">
+      <Loader />
       <Navbar />
       <HeroScroll />
       <ModelShowcase />

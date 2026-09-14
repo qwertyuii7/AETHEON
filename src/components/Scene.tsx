@@ -192,13 +192,6 @@ export const Scene: React.FC<SceneProps> = ({ scene, scrollContainerId, scrollSt
         className="absolute inset-0 w-full h-full block"
       />
 
-      {/* Loading */}
-      {loadedCount < scene.frameCount && (
-        <div className="absolute bottom-4 right-4 text-[0.65rem] tracking-[0.2em] text-gold opacity-50 z-50 pointer-events-none">
-          {Math.round((loadedCount / scene.frameCount) * 100)}%
-        </div>
-      )}
-
       {/* Text overlays */}
       <div className="absolute inset-0 pointer-events-none z-10">
         {scene.beats.map((beat, i) => {
