@@ -1,10 +1,12 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const sculptures = [
+import { ProductModal, type Product } from './ProductModal';
+
+const sculptures: Product[] = [
   { id: 1, name: "Angel Cybersigilism", price: "$2,400", category: "Monumental Figure", image: "/images/sculptures/angel cybersigilism.jpg" },
   { id: 2, name: "Classic Bust", price: "$1,850", category: "Portrait Bust", image: "/images/sculptures/Classic Sculptures.jpg" },
   { id: 3, name: "Elegant Marble", price: "$3,100", category: "Aesthetic Fragment", image: "/images/sculptures/Elegant Marble Sculpture Aesthetic.jpg" },
@@ -18,6 +20,7 @@ const sculptures = [
 export const Products: React.FC = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   // Staggered reveal on scroll
   useEffect(() => {
@@ -64,6 +67,7 @@ export const Products: React.FC = () => {
               key={item.id} 
               ref={el => { cardsRef.current[i] = el; }}
               className="opacity-0 cursor-pointer group"
+              onClick={() => setSelectedProduct(item)}
             >
               {/* Image container */}
               <div className="aspect-[3/4] overflow-hidden bg-white/5 mb-4 relative rounded-sm">
@@ -98,6 +102,14 @@ export const Products: React.FC = () => {
           </a>
         </div>
       </div>
+
+      {/* Render the Product Modal when a product is selected */}
+      {selectedProduct && (
+        <ProductModal 
+          product={selectedProduct} 
+          onClose={() => setSelectedProduct(null)} 
+        />
+      )}
     </section>
   );
 };
