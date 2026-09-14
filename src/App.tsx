@@ -24,7 +24,7 @@ const App: React.FC = () => {
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
-      touchMultiplier: 2,
+      // Removed touchMultiplier to prevent mobile scroll glitching
     });
 
     lenis.on('scroll', ScrollTrigger.update);

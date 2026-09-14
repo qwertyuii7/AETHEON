@@ -107,9 +107,17 @@ export const Scene: React.FC<SceneProps> = ({ scene, scrollContainerId, scrollSt
 
   // Resize canvas — debounced, set dimensions once
   useEffect(() => {
+    let lastWidth = window.innerWidth;
+    
     const resize = () => {
       const canvas = canvasRef.current;
       if (!canvas) return;
+      
+      const currentWidth = window.innerWidth;
+      // Only resize if width changed (prevents mobile address bar hide/show glitching)
+      if (currentWidth === lastWidth && canvas.width > 0) return;
+      lastWidth = currentWidth;
+      
       const dpr = Math.min(window.devicePixelRatio || 1, 2); // Cap at 2x for performance
       canvas.width = window.innerWidth * dpr;
       canvas.height = window.innerHeight * dpr;
@@ -120,6 +128,15 @@ export const Scene: React.FC<SceneProps> = ({ scene, scrollContainerId, scrollSt
 
     let timer: ReturnType<typeof setTimeout>;
     const debounced = () => { clearTimeout(timer); timer = setTimeout(resize, 150); };
+    
+    // Initial size
+    const canvas = canvasRef.current;
+    if (canvas) {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+    }
+    
     resize();
     window.addEventListener('resize', debounced);
     return () => { window.removeEventListener('resize', debounced); clearTimeout(timer); };

@@ -57,7 +57,7 @@ export const HeroScroll: React.FC = () => {
 
   return (
     <div id={HERO_ID} className="relative w-full h-[900vh]">
-      <div className="sticky top-0 w-full h-screen overflow-hidden bg-ink">
+      <div className="sticky top-0 w-full h-[100dvh] overflow-hidden bg-ink">
 
         {storyData.scenes.map((scene: any, i: number) => {
           const starts = ['top top', '33.3% top', '66.6% top'];
